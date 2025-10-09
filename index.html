@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Recipe & Meal Planner - Plan your meals, discover recipes, and track nutrition">
+    <title>Recipe & Meal Planner - Home</title>
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🍽️ MealPlanner</h1>
+                </div>
+                
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="search.html">Discover</a></li>
+                    <li><a href="meal-planner.html">Meal Plan</a></li>
+                    <li><a href="shopping-list.html">Shopping</a></li>
+                    <li><a href="#favorites">Favorites</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="container">
+                <h2>Welcome back, User! 👋</h2>
+                <p>Let's plan some delicious meals today</p>
+            </div>
+        </section>
+
+        <!-- Today's Meals Section -->
+        <section class="todays-meals">
+            <div class="container">
+                <h3>Today's Meals</h3>
+                <div class="meals-grid">
+                    <!-- Breakfast Card -->
+                    <div class="meal-card" id="breakfast">
+                        <div class="meal-header">
+                            <span class="meal-icon">🌅</span>
+                            <h4>Breakfast</h4>
+                        </div>
+                        <div class="meal-content">
+                            <p class="empty-meal">+ Add Breakfast</p>
+                        </div>
+                    </div>
+
+                    <!-- Lunch Card -->
+                    <div class="meal-card" id="lunch">
+                        <div class="meal-header">
+                            <span class="meal-icon">🌞</span>
+                            <h4>Lunch</h4>
+                        </div>
+                        <div class="meal-content">
+                            <p class="empty-meal">+ Add Lunch</p>
+                        </div>
+                    </div>
+
+                    <!-- Dinner Card -->
+                    <div class="meal-card" id="dinner">
+                        <div class="meal-header">
+                            <span class="meal-icon">🌙</span>
+                            <h4>Dinner</h4>
+                        </div>
+                        <div class="meal-content">
+                            <p class="empty-meal">+ Add Dinner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Summary Section -->
+        <section class="nutrition-summary">
+            <div class="container">
+                <h3>Today's Nutrition</h3>
+                <div class="nutrition-stats">
+                    <!-- Calories -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">Calories</span>
+                            <span class="stat-value" id="caloriesValue">0 / 2000</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="caloriesProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Macros Grid -->
+                    <div class="macros-grid">
+                        <div class="macro-item">
+                            <span class="macro-label">Protein</span>
+                            <span class="macro-value" id="proteinValue">0g</span>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-label">Carbs</span>
+                            <span class="macro-value" id="carbsValue">0g</span>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-label">Fat</span>
+                            <span class="macro-value" id="fatValue">0g</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommended Recipes Section -->
+        <section class="recommended-recipes">
+            <div class="container">
+                <div class="section-header">
+                    <h3>Recommended for You</h3>
+                    <a href="search.html" class="view-all-link">View All →</a>
+                </div>
+                
+                <div class="recipes-grid" id="recommendedRecipes">
+                    <!-- Recipe cards will be loaded here via JavaScript -->
+                    <div class="loading-message">Loading recipes...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions Section -->
+        <section class="quick-actions">
+            <div class="container">
+                <h3>Quick Actions</h3>
+                <div class="actions-grid">
+                    <a href="search.html" class="action-card">
+                        <span class="action-icon">🔍</span>
+                        <h4>Find Recipes</h4>
+                        <p>Search thousands of recipes</p>
+                    </a>
+                    
+                    <a href="meal-planner.html" class="action-card">
+                        <span class="action-icon">📅</span>
+                        <h4>Plan Meals</h4>
+                        <p>Create your weekly plan</p>
+                    </a>
+                    
+                    <a href="shopping-list.html" class="action-card">
+                        <span class="action-icon">🛒</span>
+                        <h4>Shopping List</h4>
+                        <p>View your grocery list</p>
+                    </a>
+                    
+                    <button class="action-card surprise-btn" id="surpriseMe">
+                        <span class="action-icon">🎲</span>
+                        <h4>Surprise Me</h4>
+                        <p>Get a random recipe</p>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Izy Recipe & Meal Planner. All rights reserved.</p>
+            <p>Powered by Spoonacular API</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+     <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/recipe.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
