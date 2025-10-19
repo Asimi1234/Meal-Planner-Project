@@ -311,7 +311,7 @@ function generateShoppingListFromMealPlan() {
                 const category = categorizeIngredient(ingredient.aisle || ingredient.name);
                 
                 if (ingredients.has(name)) {
-                    // Ingredient already exists, sum amounts if possible
+                    // Ingredient exists, could add quantities here
                     const existing = ingredients.get(name);
                     existing.amount += ingredient.amount || 0;
                 } else {
@@ -331,26 +331,43 @@ function generateShoppingListFromMealPlan() {
 }
 
 /**
- * Categorize ingredient by aisle
- * @param {string} aisle - Aisle
+ * Categorize ingredient by name/aisle
+ * @param {string} aisle - Aisle or ingredient name
  * @returns {string} - Category
  */
 function categorizeIngredient(aisle) {
-    const aisleStr = aisle.toLowerCase();
+    const aisleStr = (aisle || '').toLowerCase();
     
-    if (aisleStr.includes('produce') || aisleStr.includes('vegetable') || aisleStr.includes('fruit')) {
+    // Produce
+    if (aisleStr.match(/produce|vegetable|fruit|lettuce|tomato|onion|pepper|carrot|broccoli|spinach|kale|cabbage|cucumber|zucchini|potato|celery|avocado|mushroom|garlic|herb|fresh/)) {
         return 'produce';
-    } else if (aisleStr.includes('meat') || aisleStr.includes('seafood') || aisleStr.includes('poultry')) {
+    }
+    
+    // Meat & Seafood
+    if (aisleStr.match(/meat|seafood|poultry|beef|chicken|pork|fish|salmon|tuna|shrimp|turkey|bacon|ham|steak|ground/)) {
         return 'meat';
-    } else if (aisleStr.includes('dairy') || aisleStr.includes('cheese') || aisleStr.includes('milk')) {
+    }
+    
+    // Dairy
+    if (aisleStr.match(/dairy|milk|cheese|yogurt|butter|cream|egg|sour cream|cottage cheese|mozzarella|cheddar|parmesan/)) {
         return 'dairy';
-    } else if (aisleStr.includes('bread') || aisleStr.includes('bakery') || aisleStr.includes('grain')) {
+    }
+    
+    // Grains & Bread
+    if (aisleStr.match(/bread|bakery|grain|pasta|rice|cereal|flour|oat|quinoa|tortilla|bagel|bun|roll|noodle|spaghetti|penne/)) {
         return 'grains';
-    } else if (aisleStr.includes('spice') || aisleStr.includes('condiment') || aisleStr.includes('oil')) {
+    }
+    
+    // Spices & Condiments
+    if (aisleStr.match(/spice|condiment|oil|vinegar|sauce|seasoning|salt|pepper|oregano|basil|cumin|paprika|cinnamon|vanilla|mayo|mustard|ketchup|soy sauce|olive oil/)) {
         return 'spices';
-    } else if (aisleStr.includes('canned') || aisleStr.includes('jar')) {
+    }
+    
+    // Pantry/Canned
+    if (aisleStr.match(/canned|jar|can|dried|baking|sugar|stock|broth|bean|tomato paste|coconut milk/)) {
         return 'pantry';
     }
+    
     return 'other';
 }
 
@@ -364,10 +381,15 @@ function categorizeIngredient(aisle) {
  */
 function getUserPreferences() {
     return getFromStorage(STORAGE_KEYS.USER_PREFERENCES) || {
-        diet: '',
-        cuisine: '',
-        maxTime: '',
-        allergies: []
+        diets: [],
+        allergies: [],
+        cuisines: [],
+        calorieGoal: 2000,
+        proteinGoal: 150,
+        carbsGoal: 250,
+        fatGoal: 65,
+        maxCookingTime: '',
+        lastUpdated: null
     };
 }
 
@@ -431,7 +453,7 @@ function clearRecentSearches() {
 }
 
 /* ========================================
-   EXPORTS
+   EXPORT (make functions available globally)
 ======================================== */
 
 window.Storage = {

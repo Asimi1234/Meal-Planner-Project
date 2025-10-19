@@ -50,10 +50,13 @@ function createRecipeCard(recipe) {
                 <span>👥 ${servings} servings</span>
             </div>
             <div class="recipe-card-actions">
-                <button class="icon-btn view-recipe-btn" data-id="${recipe.id}">
+                <button class="icon-btn view-recipe-btn" data-id="${recipe.id}" title="View Recipe">
                     👁️ View
                 </button>
-                <button class="icon-btn favorite-btn ${isFavorite ? 'active' : ''}" data-id="${recipe.id}">
+                <button class="icon-btn add-to-plan-btn" data-id="${recipe.id}" title="Add to Meal Plan">
+                    📅 Plan
+                </button>
+                <button class="icon-btn favorite-btn ${isFavorite ? 'active' : ''}" data-id="${recipe.id}" title="Favorite">
                     ${isFavorite ? '❤️' : '🤍'}
                 </button>
             </div>
@@ -69,8 +72,18 @@ function attachRecipeCardListeners(container) {
     // View recipe buttons
     container.querySelectorAll('.view-recipe-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
+            e.stopPropagation();
             const recipeId = e.target.dataset.id;
             viewRecipeDetail(recipeId);
+        });
+    });
+    
+    // Add to meal plan buttons
+    container.querySelectorAll('.add-to-plan-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const recipeId = parseInt(e.target.dataset.id);
+            await handleAddToPlan(recipeId);
         });
     });
     
@@ -87,7 +100,8 @@ function attachRecipeCardListeners(container) {
     container.querySelectorAll('.recipe-card').forEach(card => {
         card.addEventListener('click', (e) => {
             if (!e.target.classList.contains('icon-btn') && 
-                !e.target.classList.contains('favorite-btn')) {
+                !e.target.classList.contains('favorite-btn') &&
+                !e.target.classList.contains('add-to-plan-btn')) {
                 const btn = card.querySelector('.view-recipe-btn');
                 if (btn) {
                     const recipeId = btn.dataset.id;
@@ -183,20 +197,40 @@ async function loadRecipeDetails(recipeId) {
  */
 function displayRecipeDetails(recipe) {
     // Update image and title
-    document.getElementById('recipeImage').src = recipe.image || Utils.getPlaceholderImage(600, 400);
-    document.getElementById('recipeImage').alt = recipe.title;
-    document.getElementById('recipeTitle').textContent = recipe.title;
+    const recipeImage = document.getElementById('recipeImage');
+    const recipeTitle = document.getElementById('recipeTitle');
+    
+    if (recipeImage) {
+        recipeImage.src = recipe.image || Utils.getPlaceholderImage(600, 400);
+        recipeImage.alt = recipe.title;
+    }
+    if (recipeTitle) {
+        recipeTitle.textContent = recipe.title;
+    }
     
     // Update meta information
-    document.getElementById('recipeTime').textContent = Utils.formatTime(recipe.readyInMinutes);
-    document.getElementById('recipeServings').textContent = `${recipe.servings} servings`;
-    document.getElementById('recipeRating').textContent = recipe.spoonacularScore 
-        ? (recipe.spoonacularScore / 20).toFixed(1) 
-        : 'N/A';
+    const recipeTime = document.getElementById('recipeTime');
+    const recipeServings = document.getElementById('recipeServings');
+    const recipeRating = document.getElementById('recipeRating');
+    
+    if (recipeTime) {
+        recipeTime.textContent = Utils.formatTime(recipe.readyInMinutes);
+    }
+    if (recipeServings) {
+        recipeServings.textContent = `${recipe.servings} servings`;
+    }
+    if (recipeRating) {
+        recipeRating.textContent = recipe.spoonacularScore 
+            ? (recipe.spoonacularScore / 20).toFixed(1) 
+            : 'N/A';
+    }
     
     // Update summary
-    const summary = Utils.stripHTML(recipe.summary);
-    document.getElementById('recipeSummary').textContent = summary;
+    const recipeSummary = document.getElementById('recipeSummary');
+    if (recipeSummary) {
+        const summary = Utils.stripHTML(recipe.summary);
+        recipeSummary.textContent = summary;
+    }
     
     // Display ingredients
     displayIngredients(recipe.extendedIngredients || []);
@@ -212,9 +246,11 @@ function displayRecipeDetails(recipe) {
     
     // Update favorite button
     const saveBtn = document.getElementById('saveBtn');
-    const isFavorite = Storage.isInFavorites(recipe.id);
-    saveBtn.innerHTML = isFavorite ? '<span>❤️</span> Saved' : '<span>❤️</span> Save to Favorites';
-    saveBtn.onclick = () => toggleFavoriteDetail(recipe, saveBtn);
+    if (saveBtn) {
+        const isFavorite = Storage.isInFavorites(recipe.id);
+        saveBtn.innerHTML = isFavorite ? '<span>❤️</span> Saved' : '<span>❤️</span> Save to Favorites';
+        saveBtn.onclick = () => toggleFavoriteDetail(recipe, saveBtn);
+    }
 }
 
 /**
@@ -223,6 +259,8 @@ function displayRecipeDetails(recipe) {
  */
 function displayIngredients(ingredients) {
     const list = document.getElementById('ingredientsList');
+    
+    if (!list) return;
     
     if (!ingredients || ingredients.length === 0) {
         list.innerHTML = '<li>No ingredients available</li>';
@@ -250,10 +288,15 @@ function displayNutrition(nutrition) {
     const carbs = nutrients.find(n => n.name === 'Carbohydrates');
     const fat = nutrients.find(n => n.name === 'Fat');
     
-    document.getElementById('nutritionCalories').textContent = calories ? Math.round(calories.amount) : '0';
-    document.getElementById('nutritionProtein').textContent = protein ? Utils.formatNutrition(protein.amount) : '0g';
-    document.getElementById('nutritionCarbs').textContent = carbs ? Utils.formatNutrition(carbs.amount) : '0g';
-    document.getElementById('nutritionFat').textContent = fat ? Utils.formatNutrition(fat.amount) : '0g';
+    const caloriesEl = document.getElementById('nutritionCalories');
+    const proteinEl = document.getElementById('nutritionProtein');
+    const carbsEl = document.getElementById('nutritionCarbs');
+    const fatEl = document.getElementById('nutritionFat');
+    
+    if (caloriesEl) caloriesEl.textContent = calories ? Math.round(calories.amount) : '0';
+    if (proteinEl) proteinEl.textContent = protein ? Utils.formatNutrition(protein.amount) : '0g';
+    if (carbsEl) carbsEl.textContent = carbs ? Utils.formatNutrition(carbs.amount) : '0g';
+    if (fatEl) fatEl.textContent = fat ? Utils.formatNutrition(fat.amount) : '0g';
 }
 
 /**
@@ -262,6 +305,8 @@ function displayNutrition(nutrition) {
  */
 function displayInstructions(instructions) {
     const list = document.getElementById('instructionsList');
+    
+    if (!list) return;
     
     if (!instructions || instructions.length === 0 || !instructions[0].steps) {
         list.innerHTML = '<li>No instructions available</li>';
@@ -280,6 +325,9 @@ function displayInstructions(instructions) {
  */
 function displayDietLabels(recipe) {
     const container = document.getElementById('dietLabels');
+    
+    if (!container) return;
+    
     const labels = [];
     
     if (recipe.vegetarian) labels.push('Vegetarian');
@@ -378,6 +426,95 @@ async function addIngredientsToShoppingList(recipeId) {
     }
 }
 
+/**
+ * Handle adding recipe to meal plan
+ * @param {number} recipeId - Recipe ID
+ */
+async function handleAddToPlan(recipeId) {
+    // Show modal to select day and meal type
+    showMealPlanModal(recipeId);
+}
+
+/**
+ * Show modal for selecting day and meal type
+ * @param {number} recipeId - Recipe ID
+ */
+function showMealPlanModal(recipeId) {
+    // Create modal HTML
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content meal-plan-modal">
+            <div class="modal-header">
+                <h3>Add to Meal Plan</h3>
+                <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modalDay">Select Day:</label>
+                    <select id="modalDay" class="form-select">
+                        <option value="monday">Monday</option>
+                        <option value="tuesday">Tuesday</option>
+                        <option value="wednesday">Wednesday</option>
+                        <option value="thursday">Thursday</option>
+                        <option value="friday">Friday</option>
+                        <option value="saturday">Saturday</option>
+                        <option value="sunday">Sunday</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="modalMeal">Select Meal:</label>
+                    <select id="modalMeal" class="form-select">
+                        <option value="breakfast">🌅 Breakfast</option>
+                        <option value="lunch">🌞 Lunch</option>
+                        <option value="dinner">🌙 Dinner</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+                <button class="btn btn-primary" id="confirmAddToPlan">Add to Plan</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Add animation
+    setTimeout(() => modal.classList.add('active'), 10);
+    
+    // Handle confirm button
+    const confirmBtn = document.getElementById('confirmAddToPlan');
+    confirmBtn.addEventListener('click', async () => {
+        const day = document.getElementById('modalDay').value;
+        const mealType = document.getElementById('modalMeal').value;
+        
+        // Show loading
+        confirmBtn.innerHTML = '<span class="spinner"></span> Adding...';
+        confirmBtn.disabled = true;
+        
+        // Fetch recipe details
+        const recipe = await API.getRecipeById(recipeId);
+        
+        if (recipe) {
+            Storage.addMealToPlan(day, mealType, recipe);
+            Utils.showToast(`Added to ${day} ${mealType}!`, 'success');
+            modal.remove();
+        } else {
+            Utils.showToast('Failed to add recipe', 'error');
+            confirmBtn.innerHTML = 'Add to Plan';
+            confirmBtn.disabled = false;
+        }
+    });
+    
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
 /* ========================================
    EXPORT
 ======================================== */
@@ -389,5 +526,7 @@ window.Recipe = {
     toggleFavorite,
     loadRecipeDetails,
     displayRecipeDetails,
-    addIngredientsToShoppingList
+    addIngredientsToShoppingList,
+    handleAddToPlan,
+    showMealPlanModal
 };

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your favorite saved recipes">
+    <title>My Favorites - MealPlanner</title>
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🍽️ MealPlanner</h1>
+                </div>
+                
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="search.html">Discover</a></li>
+                    <li><a href="meal-planner.html">Meal Plan</a></li>
+                    <li><a href="shopping-list.html">Shopping</a></li>
+                    <li><a href="favorites.html" class="active">Favorites</a></li>
+                    <li><a href="preferences.html">Settings</a></li>
+                    <li><a href="nutrition.html">Nutrition</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="favorites-header">
+            <div class="container">
+                <h2>❤️ My Favorite Recipes</h2>
+                <p class="favorites-subtitle">Recipes you've saved for later</p>
+                
+                <!-- Filter/Sort Options -->
+                <div class="favorites-controls">
+                    <div class="sort-options">
+                        <label for="sortFavorites">Sort by:</label>
+                        <select id="sortFavorites" class="sort-select">
+                            <option value="recent">Recently Added</option>
+                            <option value="title">Recipe Name (A-Z)</option>
+                            <option value="time">Cooking Time</option>
+                        </select>
+                    </div>
+                    
+                    <div class="favorites-actions">
+                        <button id="clearAllFavorites" class="btn btn-outline">
+                            🗑️ Clear All
+                        </button>
+                        <a href="search.html" class="btn btn-primary">
+                            ➕ Add More Recipes
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="favorites-stats">
+                    <div class="stat-badge">
+                        <span class="stat-number" id="totalFavorites">0</span>
+                        <span class="stat-label">Saved Recipes</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Favorites Grid -->
+        <section class="favorites-content">
+            <div class="container">
+                <!-- Empty State -->
+                <div id="emptyFavorites" class="empty-state" style="display: none;">
+                    <div class="empty-icon">💔</div>
+                    <h3>No Favorites Yet</h3>
+                    <p>Start adding recipes to your favorites by clicking the heart icon on any recipe!</p>
+                    <a href="search.html" class="btn btn-primary">Discover Recipes</a>
+                </div>
+
+                <!-- Recipes Grid -->
+                <div class="recipes-grid" id="favoritesGrid">
+                    <!-- Favorite recipes will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Collections Section (Optional for later) -->
+        <section class="collections-section" style="display: none;">
+            <div class="container">
+                <h3>My Collections</h3>
+                <p class="section-subtitle">Organize your favorites into collections</p>
+                
+                <div class="collections-grid" id="collectionsGrid">
+                    <!-- Collections will be loaded here in future -->
+                </div>
+                
+                <button class="btn btn-outline" id="createCollection">
+                    ➕ Create New Collection
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Recipe & Meal Planner. All rights reserved.</p>
+            <p>Powered by Spoonacular API</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/recipe.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

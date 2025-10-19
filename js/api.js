@@ -2,50 +2,13 @@
    API MODULE - Spoonacular API Integration
 ======================================== */
 
+console.log('🔧 Loading API module...');
+
 // API key loaded from config.js
 const API_KEY = CONFIG.SPOONACULAR_API_KEY;
 const BASE_URL = 'https://api.spoonacular.com';
 
-// API Endpoints
-const API = {
-    // Search recipes
-    searchRecipes: (query, filters = {}) => {
-        const params = new URLSearchParams({
-            apiKey: API_KEY,
-            query: query || '',
-            number: 12,
-            addRecipeInformation: true,
-            fillIngredients: true,
-            ...filters
-        });
-        return `${BASE_URL}/recipes/complexSearch?${params}`;
-    },
-
-    // Get recipe details by ID
-    getRecipeDetails: (id) => {
-        return `${BASE_URL}/recipes/${id}/information?apiKey=${API_KEY}&includeNutrition=true`;
-    },
-
-    // Get similar recipes
-    getSimilarRecipes: (id) => {
-        return `${BASE_URL}/recipes/${id}/similar?apiKey=${API_KEY}&number=4`;
-    },
-
-    // Get random recipes
-    getRandomRecipes: (number = 6, tags = '') => {
-        const params = new URLSearchParams({
-            apiKey: API_KEY,
-            number: number,
-            tags: tags
-        });
-        return `${BASE_URL}/recipes/random?${params}`;
-    },
-
-    // Get recipe ingredients
-    getIngredientInfo: (id) => {
-        return `${BASE_URL}/food/ingredients/${id}/information?apiKey=${API_KEY}`;
-    }
-};
+console.log('API Key configured:', API_KEY ? 'Yes ✅' : 'No ❌');
 
 /* ========================================
    API REQUEST FUNCTIONS
@@ -79,11 +42,20 @@ async function fetchFromAPI(url) {
 /**
  * Search for recipes
  * @param {string} query - Search query
- * @param {object} filters - Filter options (cuisine, diet, maxReadyTime, etc.)
+ * @param {object} filters - Filter options
  * @returns {Promise} - Array of recipes
  */
 async function searchRecipes(query = '', filters = {}) {
-    const url = API.searchRecipes(query, filters);
+    const params = new URLSearchParams({
+        apiKey: API_KEY,
+        query: query || '',
+        number: 12,
+        addRecipeInformation: true,
+        fillIngredients: true,
+        ...filters
+    });
+    
+    const url = `${BASE_URL}/recipes/complexSearch?${params}`;
     const result = await fetchFromAPI(url);
     
     if (result.success) {
@@ -98,7 +70,7 @@ async function searchRecipes(query = '', filters = {}) {
  * @returns {Promise} - Recipe details object
  */
 async function getRecipeById(recipeId) {
-    const url = API.getRecipeDetails(recipeId);
+    const url = `${BASE_URL}/recipes/${recipeId}/information?apiKey=${API_KEY}&includeNutrition=true`;
     const result = await fetchFromAPI(url);
     
     if (result.success) {
@@ -108,12 +80,12 @@ async function getRecipeById(recipeId) {
 }
 
 /**
- * Get similar recipes to a given recipe
+ * Get similar recipes
  * @param {number} recipeId - Recipe ID
  * @returns {Promise} - Array of similar recipes
  */
 async function getSimilarRecipes(recipeId) {
-    const url = API.getSimilarRecipes(recipeId);
+    const url = `${BASE_URL}/recipes/${recipeId}/similar?apiKey=${API_KEY}&number=4`;
     const result = await fetchFromAPI(url);
     
     if (result.success) {
@@ -124,12 +96,18 @@ async function getSimilarRecipes(recipeId) {
 
 /**
  * Get random recipes
- * @param {number} count - Number of recipes to fetch
- * @param {string} tags - Tags for filtering (e.g., 'vegetarian,dessert')
+ * @param {number} count - Number of recipes
+ * @param {string} tags - Tags for filtering
  * @returns {Promise} - Array of random recipes
  */
 async function getRandomRecipes(count = 6, tags = '') {
-    const url = API.getRandomRecipes(count, tags);
+    const params = new URLSearchParams({
+        apiKey: API_KEY,
+        number: count,
+        tags: tags
+    });
+    
+    const url = `${BASE_URL}/recipes/random?${params}`;
     const result = await fetchFromAPI(url);
     
     if (result.success) {
@@ -139,46 +117,22 @@ async function getRandomRecipes(count = 6, tags = '') {
 }
 
 /**
- * Get recipes by cuisine type
- * @param {string} cuisine - Cuisine type (e.g., 'italian', 'mexican')
- * @param {number} count - Number of recipes
- * @returns {Promise} - Array of recipes
- */
-async function getRecipesByCuisine(cuisine, count = 12) {
-    return await searchRecipes('', { cuisine, number: count });
-}
-
-/**
- * Get recipes by diet type
- * @param {string} diet - Diet type (e.g., 'vegetarian', 'vegan')
- * @param {number} count - Number of recipes
- * @returns {Promise} - Array of recipes
- */
-async function getRecipesByDiet(diet, count = 12) {
-    return await searchRecipes('', { diet, number: count });
-}
-
-/**
  * Check if API key is configured
- * @returns {boolean} - True if API key is set
+ * @returns {boolean}
  */
 function isAPIKeyConfigured() {
-    if (API_KEY === 'YOUR_API_KEY_HERE' || !API_KEY) {
-        console.error('⚠️ Spoonacular API key not configured! Please add your API key in api.js');
+    if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE' || API_KEY === '' || API_KEY.length < 10) {
+        console.error('⚠️ Spoonacular API key not configured properly!');
         return false;
     }
     return true;
 }
 
-/* ========================================
-   CACHE MANAGEMENT (Optional)
-======================================== */
-
 /**
- * Cache API responses to reduce API calls
+ * Cache API responses
  * @param {string} key - Cache key
  * @param {any} data - Data to cache
- * @param {number} expiryMinutes - Cache expiry time in minutes
+ * @param {number} expiryMinutes - Expiry time
  */
 function cacheAPIResponse(key, data, expiryMinutes = 60) {
     const cacheData = {
@@ -190,9 +144,9 @@ function cacheAPIResponse(key, data, expiryMinutes = 60) {
 }
 
 /**
- * Get cached API response if valid
+ * Get cached API response
  * @param {string} key - Cache key
- * @returns {any|null} - Cached data or null if expired/not found
+ * @returns {any|null}
  */
 function getCachedAPIResponse(key) {
     const cached = localStorage.getItem(`api_cache_${key}`);
@@ -202,11 +156,9 @@ function getCachedAPIResponse(key) {
         const cacheData = JSON.parse(cached);
         const now = Date.now();
         
-        // Check if cache is still valid
         if (now - cacheData.timestamp < cacheData.expiry) {
             return cacheData.data;
         } else {
-            // Cache expired, remove it
             localStorage.removeItem(`api_cache_${key}`);
             return null;
         }
@@ -219,44 +171,41 @@ function getCachedAPIResponse(key) {
 /**
  * Search recipes with caching
  * @param {string} query - Search query
- * @param {object} filters - Filter options
- * @returns {Promise} - Array of recipes
+ * @param {object} filters - Filters
+ * @returns {Promise}
  */
 async function searchRecipesWithCache(query = '', filters = {}) {
     const cacheKey = `search_${query}_${JSON.stringify(filters)}`;
     
-    // Check cache first
     const cached = getCachedAPIResponse(cacheKey);
     if (cached) {
         console.log('📦 Using cached results');
         return cached;
     }
     
-    // Fetch from API
     const results = await searchRecipes(query, filters);
     
-    // Cache the results
     if (results.length > 0) {
-        cacheAPIResponse(cacheKey, results, 30); // Cache for 30 minutes
+        cacheAPIResponse(cacheKey, results, 30);
     }
     
     return results;
 }
 
 /* ========================================
-   EXPORT (for use in other modules)
+   EXPORT
 ======================================== */
 
-// Make functions available globally
 window.API = {
     searchRecipes,
     getRecipeById,
     getSimilarRecipes,
     getRandomRecipes,
-    getRecipesByCuisine,
-    getRecipesByDiet,
     isAPIKeyConfigured,
     searchRecipesWithCache,
     cacheAPIResponse,
-    getCachedAPIResponse
+    getCachedAPIResponse,
+    fetchFromAPI
 };
+
+console.log('✅ API module loaded successfully!', window.API);

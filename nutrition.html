@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your nutrition and progress">
+    <title>Nutrition Dashboard - MealPlanner</title>
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🍽️ MealPlanner</h1>
+                </div>
+                
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="search.html">Discover</a></li>
+                    <li><a href="meal-planner.html">Meal Plan</a></li>
+                    <li><a href="shopping-list.html">Shopping</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                    <li><a href="preferences.html">Settings</a></li>
+                    <li><a href="nutrition.html">Nutrition</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="nutrition-header">
+            <div class="container">
+                <h2>📊 Nutrition Dashboard</h2>
+                <p class="nutrition-subtitle">Track your daily nutrition and progress toward your goals</p>
+                
+                <!-- View Toggle -->
+                <div class="view-toggle">
+                    <button class="toggle-btn active" data-view="today">Today</button>
+                    <button class="toggle-btn" data-view="week">This Week</button>
+                    <button class="toggle-btn" data-view="month">This Month</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Today's Overview -->
+        <section class="nutrition-overview" id="nutritionOverview">
+            <div class="container">
+                <h3 id="viewTitle">Today's Nutrition</h3>
+                
+                <!-- Main Stats Grid -->
+                <div class="nutrition-stats-grid">
+                    <!-- Calories -->
+                    <div class="stat-card-large">
+                        <div class="stat-card-header">
+                            <h4>Calories</h4>
+                            <span class="stat-icon">🔥</span>
+                        </div>
+                        <div class="stat-value-large">
+                            <span id="caloriesConsumed">0</span>
+                            <span class="stat-divider">/</span>
+                            <span id="caloriesGoal">2000</span>
+                        </div>
+                        <div class="progress-bar-large">
+                            <div class="progress-fill-large" id="caloriesProgress" style="width: 0%"></div>
+                        </div>
+                        <p class="stat-remaining" id="caloriesRemaining">2000 remaining</p>
+                    </div>
+
+                    <!-- Protein -->
+                    <div class="stat-card-large">
+                        <div class="stat-card-header">
+                            <h4>Protein</h4>
+                            <span class="stat-icon">🥩</span>
+                        </div>
+                        <div class="stat-value-large">
+                            <span id="proteinConsumed">0</span>
+                            <span class="stat-unit">g</span>
+                            <span class="stat-divider">/</span>
+                            <span id="proteinGoal">150</span>
+                            <span class="stat-unit">g</span>
+                        </div>
+                        <div class="progress-bar-large">
+                            <div class="progress-fill-large protein-fill" id="proteinProgress" style="width: 0%"></div>
+                        </div>
+                        <p class="stat-remaining" id="proteinRemaining">150g remaining</p>
+                    </div>
+
+                    <!-- Carbs -->
+                    <div class="stat-card-large">
+                        <div class="stat-card-header">
+                            <h4>Carbohydrates</h4>
+                            <span class="stat-icon">🍞</span>
+                        </div>
+                        <div class="stat-value-large">
+                            <span id="carbsConsumed">0</span>
+                            <span class="stat-unit">g</span>
+                            <span class="stat-divider">/</span>
+                            <span id="carbsGoal">250</span>
+                            <span class="stat-unit">g</span>
+                        </div>
+                        <div class="progress-bar-large">
+                            <div class="progress-fill-large carbs-fill" id="carbsProgress" style="width: 0%"></div>
+                        </div>
+                        <p class="stat-remaining" id="carbsRemaining">250g remaining</p>
+                    </div>
+
+                    <!-- Fat -->
+                    <div class="stat-card-large">
+                        <div class="stat-card-header">
+                            <h4>Fat</h4>
+                            <span class="stat-icon">🥑</span>
+                        </div>
+                        <div class="stat-value-large">
+                            <span id="fatConsumed">0</span>
+                            <span class="stat-unit">g</span>
+                            <span class="stat-divider">/</span>
+                            <span id="fatGoal">65</span>
+                            <span class="stat-unit">g</span>
+                        </div>
+                        <div class="progress-bar-large">
+                            <div class="progress-fill-large fat-fill" id="fatProgress" style="width: 0%"></div>
+                        </div>
+                        <p class="stat-remaining" id="fatRemaining">65g remaining</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Meal Breakdown -->
+        <section class="meal-breakdown">
+            <div class="container">
+                <h3>Meal Breakdown</h3>
+                
+                <div class="meals-nutrition-grid" id="mealBreakdown">
+                    <!-- Breakfast -->
+                    <div class="meal-nutrition-card">
+                        <div class="meal-nutrition-header">
+                            <span class="meal-icon">🌅</span>
+                            <h4>Breakfast</h4>
+                        </div>
+                        <div class="meal-nutrition-stats">
+                            <div class="mini-stat">
+                                <span class="mini-label">Calories:</span>
+                                <span class="mini-value" id="breakfastCalories">0</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Protein:</span>
+                                <span class="mini-value" id="breakfastProtein">0g</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Carbs:</span>
+                                <span class="mini-value" id="breakfastCarbs">0g</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Fat:</span>
+                                <span class="mini-value" id="breakfastFat">0g</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lunch -->
+                    <div class="meal-nutrition-card">
+                        <div class="meal-nutrition-header">
+                            <span class="meal-icon">🌞</span>
+                            <h4>Lunch</h4>
+                        </div>
+                        <div class="meal-nutrition-stats">
+                            <div class="mini-stat">
+                                <span class="mini-label">Calories:</span>
+                                <span class="mini-value" id="lunchCalories">0</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Protein:</span>
+                                <span class="mini-value" id="lunchProtein">0g</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Carbs:</span>
+                                <span class="mini-value" id="lunchCarbs">0g</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Fat:</span>
+                                <span class="mini-value" id="lunchFat">0g</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dinner -->
+                    <div class="meal-nutrition-card">
+                        <div class="meal-nutrition-header">
+                            <span class="meal-icon">🌙</span>
+                            <h4>Dinner</h4>
+                        </div>
+                        <div class="meal-nutrition-stats">
+                            <div class="mini-stat">
+                                <span class="mini-label">Calories:</span>
+                                <span class="mini-value" id="dinnerCalories">0</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Protein:</span>
+                                <span class="mini-value" id="dinnerProtein">0g</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Carbs:</span>
+                                <span class="mini-value" id="dinnerCarbs">0g</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="mini-label">Fat:</span>
+                                <span class="mini-value" id="dinnerFat">0g</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Chart (Simple CSS-based) -->
+        <section class="nutrition-chart">
+            <div class="container">
+                <h3>Weekly Progress</h3>
+                
+                <div class="chart-container">
+                    <div class="bar-chart" id="weeklyChart">
+                        <!-- Bars will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="nutrition-actions">
+            <div class="container">
+                <div class="actions-grid">
+                    <a href="meal-planner.html" class="action-btn">
+                        📅 Update Meal Plan
+                    </a>
+                    <a href="preferences.html" class="action-btn">
+                        ⚙️ Adjust Goals
+                    </a>
+                    <button id="exportNutrition" class="action-btn">
+                        📥 Export Data
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Recipe & Meal Planner. All rights reserved.</p>
+            <p>Powered by Spoonacular API</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/nutrition.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

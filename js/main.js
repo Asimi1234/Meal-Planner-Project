@@ -25,6 +25,15 @@ function init() {
         case 'shopping-list':
             initShoppingListPage();
             break;
+        case 'favorites':
+            initFavoritesPage();
+            break;
+        case 'preferences':
+            initPreferencesPage();
+            break;
+        case 'nutrition':
+            initNutritionDashboard();
+            break;
     }
     
     // Initialize mobile menu (runs on all pages)
@@ -44,6 +53,8 @@ function getCurrentPage() {
     if (page === 'recipe-detail.html') return 'recipe-detail';
     if (page === 'meal-planner.html') return 'meal-planner';
     if (page === 'shopping-list.html') return 'shopping-list';
+    if (page === 'favorites.html') return 'favorites';
+    if (page === 'preferences.html') return 'preferences';
     
     return 'index';
 }
@@ -259,8 +270,14 @@ async function performSearch() {
     
     if (!resultsContainer) return;
     
+    // Check if API is available
+    if (!window.API || typeof API.isAPIKeyConfigured !== 'function') {
+        resultsContainer.innerHTML = '<p class="loading-message">⚠️ API module not loaded properly. Please refresh the page.</p>';
+        return;
+    }
+    
     if (!API.isAPIKeyConfigured()) {
-        resultsContainer.innerHTML = '<p class="loading-message">⚠️ Please configure your API key in api.js</p>';
+        resultsContainer.innerHTML = '<p class="loading-message">⚠️ Please configure your API key in js/config.js</p>';
         return;
     }
     
@@ -299,7 +316,7 @@ async function performSearch() {
         
     } catch (error) {
         console.error('Search error:', error);
-        Utils.showError(resultsContainer, 'Failed to search recipes');
+        Utils.showError(resultsContainer, 'Failed to search recipes. Please check your API key and internet connection.');
     }
 }
 
@@ -633,7 +650,7 @@ function loadShoppingList() {
     if (shoppingList.length === 0) {
         if (emptyState) emptyState.style.display = 'block';
         hideAllCategories();
-        updateShoppingListSummary(0, 0);
+        updateShoppingListSummary();
         return;
     }
     
@@ -678,8 +695,7 @@ function loadShoppingList() {
     attachShoppingListListeners();
     
     // Update summary
-    const checkedCount = shoppingList.filter(item => item.checked).length;
-    updateShoppingListSummary(shoppingList.length, checkedCount);
+    updateShoppingListSummary();
 }
 
 /**

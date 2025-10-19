@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Set your dietary preferences and nutritional goals">
+    <title>Preferences - MealPlanner</title>
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🍽️ MealPlanner</h1>
+                </div>
+                
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="search.html">Discover</a></li>
+                    <li><a href="meal-planner.html">Meal Plan</a></li>
+                    <li><a href="shopping-list.html">Shopping</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                    <li><a href="preferences.html">Settings</a></li>
+                    <li><a href="nutrition.html">Nutrition</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="preferences-header">
+            <div class="container">
+                <h2>⚙️ My Preferences</h2>
+                <p class="preferences-subtitle">Customize your experience and set your dietary goals</p>
+            </div>
+        </section>
+
+        <!-- Preferences Form -->
+        <section class="preferences-content">
+            <div class="container">
+                <form id="preferencesForm" class="preferences-form">
+                    
+                    <!-- Dietary Restrictions -->
+                    <div class="preference-section">
+                        <h3>🥗 Dietary Preferences</h3>
+                        <p class="section-description">Select your dietary restrictions and preferences</p>
+                        
+                        <div class="checkbox-grid">
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="diet" value="vegetarian" id="dietVegetarian">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🥗</span>
+                                    <span class="checkbox-label">Vegetarian</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="diet" value="vegan" id="dietVegan">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌱</span>
+                                    <span class="checkbox-label">Vegan</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="diet" value="glutenFree" id="dietGlutenFree">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌾</span>
+                                    <span class="checkbox-label">Gluten Free</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="diet" value="dairyFree" id="dietDairyFree">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🥛</span>
+                                    <span class="checkbox-label">Dairy Free</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="diet" value="ketogenic" id="dietKeto">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🥓</span>
+                                    <span class="checkbox-label">Keto</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="diet" value="paleo" id="dietPaleo">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🍖</span>
+                                    <span class="checkbox-label">Paleo</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Allergies -->
+                    <div class="preference-section">
+                        <h3>⚠️ Allergies & Intolerances</h3>
+                        <p class="section-description">Select any food allergies or intolerances</p>
+                        
+                        <div class="checkbox-grid">
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="allergy" value="peanut" id="allergyPeanut">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🥜</span>
+                                    <span class="checkbox-label">Peanuts</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="allergy" value="tree nut" id="allergyTreeNut">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌰</span>
+                                    <span class="checkbox-label">Tree Nuts</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="allergy" value="shellfish" id="allergyShellfish">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🦐</span>
+                                    <span class="checkbox-label">Shellfish</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="allergy" value="soy" id="allergySoy">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🫘</span>
+                                    <span class="checkbox-label">Soy</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Nutritional Goals -->
+                    <div class="preference-section">
+                        <h3>🎯 Nutritional Goals</h3>
+                        <p class="section-description">Set your daily nutritional targets</p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="calorieGoal">Daily Calorie Goal</label>
+                                <input type="number" id="calorieGoal" name="calorieGoal" 
+                                       placeholder="2000" min="1000" max="5000" step="50">
+                                <span class="input-helper">Recommended: 1800-2500 calories</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="proteinGoal">Protein Goal (grams)</label>
+                                <input type="number" id="proteinGoal" name="proteinGoal" 
+                                       placeholder="150" min="50" max="300" step="5">
+                                <span class="input-helper">Recommended: 50-200g</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="carbsGoal">Carbs Goal (grams)</label>
+                                <input type="number" id="carbsGoal" name="carbsGoal" 
+                                       placeholder="250" min="50" max="500" step="5">
+                                <span class="input-helper">Recommended: 200-300g</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="fatGoal">Fat Goal (grams)</label>
+                                <input type="number" id="fatGoal" name="fatGoal" 
+                                       placeholder="65" min="20" max="150" step="5">
+                                <span class="input-helper">Recommended: 50-80g</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cuisine Preferences -->
+                    <div class="preference-section">
+                        <h3>🌍 Favorite Cuisines</h3>
+                        <p class="section-description">Select cuisines you enjoy for better recommendations</p>
+                        
+                        <div class="checkbox-grid">
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="cuisine" value="italian" id="cuisineItalian">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🍝</span>
+                                    <span class="checkbox-label">Italian</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="cuisine" value="mexican" id="cuisineMexican">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌮</span>
+                                    <span class="checkbox-label">Mexican</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="cuisine" value="chinese" id="cuisineChinese">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🥡</span>
+                                    <span class="checkbox-label">Chinese</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="cuisine" value="indian" id="cuisineIndian">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🍛</span>
+                                    <span class="checkbox-label">Indian</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="cuisine" value="japanese" id="cuisineJapanese">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🍣</span>
+                                    <span class="checkbox-label">Japanese</span>
+                                </div>
+                            </label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="cuisine" value="thai" id="cuisineThai">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🍜</span>
+                                    <span class="checkbox-label">Thai</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Cooking Time Preference -->
+                    <div class="preference-section">
+                        <h3>⏱️ Cooking Time Preference</h3>
+                        <p class="section-description">How much time do you typically have for cooking?</p>
+                        
+                        <div class="form-group">
+                            <label for="maxCookingTime">Maximum Cooking Time</label>
+                            <select id="maxCookingTime" name="maxCookingTime" class="form-select">
+                                <option value="">No preference</option>
+                                <option value="15">15 minutes or less</option>
+                                <option value="30">30 minutes or less</option>
+                                <option value="45">45 minutes or less</option>
+                                <option value="60">1 hour or less</option>
+                                <option value="120">2 hours or less</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button type="button" id="resetPreferences" class="btn btn-outline">
+                            🔄 Reset to Default
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            💾 Save Preferences
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Recipe & Meal Planner. All rights reserved.</p>
+            <p>Powered by Spoonacular API</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/preferences.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
