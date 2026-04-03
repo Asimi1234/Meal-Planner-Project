@@ -1,5 +1,7 @@
 /* ========================================
    CSS RESET & BASE STYLES
+   Recipe & Meal Planner - Main Stylesheet
+   Author: Israel
 ======================================== */
 
 * {
@@ -18,8 +20,8 @@
     
     /* Neutrals */
     --white: #FFFFFF;
-    --light-gray: #655a5a;
-    --medium-gray: #282727;
+    --light-gray: #F5F5F5;
+    --medium-gray: #9E9E9E;
     --dark-gray: #212121;
     
     /* Semantic Colors */

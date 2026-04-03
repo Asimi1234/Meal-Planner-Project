@@ -1,5 +1,6 @@
 /* ========================================
    NUTRITION DASHBOARD MODULE
+   Displays daily and weekly nutrition tracking with progress bars
 ======================================== */
 
 let currentView = 'today'; // today, week, month

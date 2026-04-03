@@ -1,5 +1,6 @@
 /* ========================================
    UTILITY FUNCTIONS
+   Shared helper functions used across all modules
 ======================================== */
 
 /**

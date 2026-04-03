@@ -1,5 +1,6 @@
 /* ========================================
    STORAGE MODULE - LocalStorage Management
+   Manages persistence for favorites, meal plans, shopping list, and preferences
 ======================================== */
 
 const STORAGE_KEYS = {

@@ -1,5 +1,6 @@
 /* ========================================
    PREFERENCES MODULE
+   Saves dietary restrictions, allergies, cuisine preferences, and nutrition goals
 ======================================== */
 
 /**

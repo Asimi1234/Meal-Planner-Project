@@ -1,5 +1,6 @@
 /* ========================================
    MEAL PLANNER MODULE
+   Weekly calendar interface for organizing breakfast, lunch, and dinner
 ======================================== */
 
 /**

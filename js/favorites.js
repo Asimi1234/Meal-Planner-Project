@@ -1,5 +1,6 @@
 /* ========================================
    FAVORITES PAGE MODULE
+   Manages saved recipe collection with sorting and filtering
 ======================================== */
 
 /**

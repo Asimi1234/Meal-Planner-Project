@@ -1,5 +1,6 @@
 /* ========================================
    MAIN APPLICATION LOGIC
+   Entry point - routes to page-specific init functions
 ======================================== */
 
 // Wait for DOM to be ready
@@ -55,7 +56,8 @@ function getCurrentPage() {
     if (page === 'shopping-list.html') return 'shopping-list';
     if (page === 'favorites.html') return 'favorites';
     if (page === 'preferences.html') return 'preferences';
-    
+    if (page === 'nutrition.html') return 'nutrition';
+
     return 'index';
 }
 

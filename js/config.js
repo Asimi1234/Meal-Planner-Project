@@ -1,4 +1,5 @@
 // js/config.js
+// Configuration file for Spoonacular API
 // This file contains your API key and should NOT be committed to git
 
 const CONFIG = {

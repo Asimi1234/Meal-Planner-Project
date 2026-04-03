@@ -1,5 +1,6 @@
 /* ========================================
    RECIPE MODULE - Recipe Display & Management
+   Handles recipe cards, detail view, and favorites toggling
 ======================================== */
 
 /**

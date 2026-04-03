@@ -1,5 +1,6 @@
 /* ========================================
    API MODULE - Spoonacular API Integration
+   Handles all external API requests with caching
 ======================================== */
 
 console.log('🔧 Loading API module...');
